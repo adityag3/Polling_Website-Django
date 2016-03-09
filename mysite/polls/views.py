@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from django.http import Http404
 from .models import Question
@@ -7,14 +7,13 @@ from django.template import loader
 # Create your views here.
 
 def index(request):
-	latest_question_list = Question.objets.order_by('-pub_date')[:5]
-	template = loader.get_template('polls/index.html')
+	latest_question_list = Question.objects.order_by('-pub_date')[:5]
+	template = 'polls/index.html'
 	context = {
 		'latest_question_list' : latest_question_list
 	}
 	#output = ', '.join([q.question_text for q in latest_question_list])
 	#return HttpResponse(output)
-
 	return render(request,template,context)
 
 def detail(request, question_id):
